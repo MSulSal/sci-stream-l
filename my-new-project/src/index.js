@@ -1,8 +1,15 @@
 const express = require("express");
 const fs = require("fs");
+const dotenv = require("dotenv");
 
+dotenv.config();
 const app = express();
-const port = 3000;
+
+if (!process.env.PORT) {
+    throw new Error("No port configured");
+}
+
+const PORT = process.env.PORT;
 
 app.get("/video", async (req, res) => {
     const videoPath = "./videos/SampleVideo_1280x720_1mb.mp4";
@@ -15,4 +22,4 @@ app.get("/video", async (req, res) => {
     fs.createReadStream(videoPath).pipe(res);
 });
 
-app.listen(port);
+app.listen(PORT);
